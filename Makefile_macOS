@@ -1,0 +1,43 @@
+NAME = so_long
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+HFILE = so_long.h
+LIBFTDIR = ./libft
+LIBFT = libft/libft.a
+MLX = ./mlx/libmlx.a
+MLX_FLAGS = -L ./mlx -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
+INCLUDE = -L ./libft -lft
+INCLUDE_MLX = -I/opt/X11/include -Imlx
+SRCS =	main.c\
+		./srcs/data_init/data_init.c\
+		./srcs/data_init/ft_destroy.c\
+		./srcs/data_init/read_map.c\
+		./srcs/data_init/read_file.c\
+		./srcs/data_init/textures_init.c\
+		./srcs/data_init/validate_map.c\
+		./srcs/events/key_events.c\
+		./srcs/events/p_moves.c\
+		./srcs/check_valid_path.c\
+		./srcs/render_img.c\
+		./srcs/utils.c\
+
+all: $(NAME)
+
+$(NAME): $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(SRCS) $(INCLUDE) $(INCLUDE_MLX) $(MLX_FLAGS) -o $(NAME)
+
+$(LIBFT):
+	@make -C ./libft
+
+$(MLX):
+	@make -C ./mlx
+
+clean:
+	@make clean -C $(LIBFTDIR)
+	@make clean -C ./mlx
+
+fclean: clean
+	@make fclean -C $(LIBFTDIR)
+	@rm -f $(NAME)
+
+re: fclean all

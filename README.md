@@ -3,8 +3,8 @@ Embark on a thrilling adventure with so_long, a simple 2D game where the player 
 
 ![Game Screenshot](Readme_files/image.png)
 
-## Gameplay Video
+<!-- ## Gameplay Video
 <video width="1280" height="720" controls>
   <source src="Readme_files/video.mp4" type="video/mp4">
   Your browser does not support the video tag.
-</video>
+</video> -->

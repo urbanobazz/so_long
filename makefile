@@ -1,13 +1,9 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -DGL_SILENCE_DEPRECATION
 HFILE = so_long.h
 LIBFTDIR = ./libft
 LIBFT = libft/libft.a
-MLX = ./mlx_linux/libmlx.a
-MLX_FLAGS = -L ./mlx_linux -lX11 -lXext -lm -lmlx -lbsd
-INCLUDE = -L ./libft -lft
-INCLUDE_MLX = -I/usr/include -Imlx
 SRCS =	main.c\
 		./srcs/data_init/data_init.c\
 		./srcs/data_init/ft_destroy.c\
@@ -21,20 +17,36 @@ SRCS =	main.c\
 		./srcs/render_img.c\
 		./srcs/utils.c\
 
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
+	MLX = ./mlx_linux/libmlx.a
+	MLX_FLAGS = -L ./mlx_linux -lX11 -lXext -lm -lmlx -lbsd
+	INCLUDE_MLX = -I/usr/include -Imlx
+	MLX_DIR = ./mlx_linux
+else ifeq ($(UNAME_S),Darwin)
+	MLX = ./mlx/libmlx.a
+	MLX_FLAGS = -L ./mlx -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
+	INCLUDE_MLX = -I/opt/X11/include -Imlx
+	MLX_DIR = ./mlx
+endif
+
+INCLUDE = -L ./libft -lft
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) -g $(SRCS) $(INCLUDE) $(INCLUDE_MLX) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRCS) $(INCLUDE) $(INCLUDE_MLX) $(MLX_FLAGS) -o $(NAME)
 
 $(LIBFT):
-	@make -C ./libft
+	@make -C $(LIBFTDIR)
 
 $(MLX):
-	@make -C ./mlx_linux
+	@make -C $(MLX_DIR)
 
 clean:
 	@make clean -C $(LIBFTDIR)
-	@make clean -C ./mlx_linux
+	@make clean -C $(MLX_DIR)
 
 fclean: clean
 	@make fclean -C $(LIBFTDIR)

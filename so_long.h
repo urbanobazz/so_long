@@ -6,14 +6,20 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 18:34:30 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/04/16 22:55:18 by ubazzane         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:52:24 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../mlx_linux/mlx.h"
+# ifdef __linux__
+#  include "../mlx_linux/mlx.h"
+# elif __APPLE__
+#  include "./mlx/mlx.h"
+# endif
+
+//# include "../mlx_linux/mlx.h"
 /* # include "./mlx_macOS/mlx.h" */
 # include "./libft/libft.h"
 # include <fcntl.h>

@@ -6,11 +6,13 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:18:52 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/04/16 22:53:44 by ubazzane         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:58:43 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../so_long.h"
+
+#if defined(__linux__)
 /* ------- keycodes for linux------ */
 int	key_press(int keycode, t_data *data)
 {
@@ -35,13 +37,9 @@ int	key_press(int keycode, t_data *data)
 	return (0);
 }
 
-int	close_window(t_data *data)
-{
-	ft_destroy(data, 0);
-	return (0);
-}
+#elif defined(__APPLE__)
 /* ---- keycodes for MAC ----- */
-/* int	key_press(int keycode, t_data *data)
+int	key_press(int keycode, t_data *data)
 {
 	int	y;
 	int	x;
@@ -62,4 +60,11 @@ int	close_window(t_data *data)
 	render_img(data);
 	check_exit(data);
 	return (0);
-} */
+}
+#endif
+
+int	close_window(t_data *data)
+{
+	ft_destroy(data, 0);
+	return (0);
+}

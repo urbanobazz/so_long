@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:51:53 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/04/16 22:57:25 by ubazzane         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:43:30 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ static void	destroy_data(t_data *data)
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	if (data->mlx_ptr)
-		mlx_destroy_display(data->mlx_ptr);
+		#ifdef __linux__
+			mlx_destroy_display(data->mlx_ptr);
+		#endif
 	if (data->mlx_ptr)
 		free(data->mlx_ptr);
 }
